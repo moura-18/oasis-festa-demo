@@ -33,3 +33,5 @@ Thumbs.db
 
 # Overclock IDE session data (local tooling metadata, not project source)
 .overclock-app/
+
+.vercel
