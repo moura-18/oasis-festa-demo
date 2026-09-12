@@ -1,0 +1,210 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens — Oásis Festas BH
+ * Paleta extraída de brand/BRAND.md (cliente real do demo).
+ * Verde escuro (#1B3B2E) = marca / sidebar / header.
+ * Laranja (#F2921E) = ação / CTA / destaque (ex: "pronto para fechar", "escalação").
+ * Ver ARCHITECTURE.md → seção "Identidade visual" para o racional completo.
+ * Escalas completas (brand-green-*, brand-orange-*) ficam disponíveis como utilities
+ * Tailwind (ex: bg-brand-green-900, text-brand-orange-500) — use-as em vez de hex cru.
+ */
+
+:root {
+  --radius: 0.75rem;
+
+  /* Escala verde da marca (fundo escuro / sidebar / header) */
+  --brand-green-50: #f3f9f5;
+  --brand-green-100: #e7f2eb;
+  --brand-green-200: #d2e6da;
+  --brand-green-300: #a9cdb9;
+  --brand-green-400: #7ba98f;
+  --brand-green-500: #4c8069;
+  --brand-green-600: #356653;
+  --brand-green-700: #2a5240;
+  --brand-green-800: #234436;
+  --brand-green-900: #1b3b2e;
+  --brand-green-950: #13291f;
+
+  /* Escala laranja da marca (CTA / destaque / escalação) */
+  --brand-orange-50: #fff7ec;
+  --brand-orange-100: #ffeed9;
+  --brand-orange-200: #ffdcac;
+  --brand-orange-300: #ffc178;
+  --brand-orange-400: #ffa83d;
+  --brand-orange-500: #f2921e;
+  --brand-orange-600: #e8871a;
+  --brand-orange-700: #c96f0f;
+  --brand-orange-800: #9c560c;
+  --brand-orange-900: #7a4409;
+  --brand-orange-950: #4d2c06;
+
+  /* Tema claro (padrão) */
+  --background: #fbfaf7;
+  --foreground: #1f2a24;
+  --card: #ffffff;
+  --card-foreground: #1f2a24;
+  --popover: #ffffff;
+  --popover-foreground: #1f2a24;
+  --primary: var(--brand-orange-500);
+  --primary-foreground: #ffffff;
+  --secondary: #f0eee8;
+  --secondary-foreground: var(--brand-green-900);
+  --muted: #f3f1ec;
+  --muted-foreground: #6b7268;
+  --accent: var(--brand-orange-100);
+  --accent-foreground: var(--brand-orange-900);
+  --destructive: #c0392b;
+  --destructive-foreground: #ffffff;
+  --border: #e5e1d8;
+  --input: #e5e1d8;
+  --ring: var(--brand-orange-500);
+
+  --success: #2f8f5b;
+  --success-foreground: #ffffff;
+  --warning: var(--brand-orange-500);
+  --warning-foreground: #ffffff;
+
+  --chart-1: var(--brand-orange-500);
+  --chart-2: var(--brand-green-700);
+  --chart-3: var(--brand-green-400);
+  --chart-4: var(--brand-orange-300);
+  --chart-5: #6b7268;
+
+  /* Sidebar / header — sempre verde escuro da marca */
+  --sidebar: var(--brand-green-900);
+  --sidebar-foreground: var(--brand-green-50);
+  --sidebar-primary: var(--brand-orange-500);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--brand-green-700);
+  --sidebar-accent-foreground: var(--brand-green-50);
+  --sidebar-border: var(--brand-green-950);
+  --sidebar-ring: var(--brand-orange-500);
+}
+
+.dark {
+  --background: var(--brand-green-950);
+  --foreground: var(--brand-green-50);
+  --card: var(--brand-green-900);
+  --card-foreground: var(--brand-green-50);
+  --popover: var(--brand-green-900);
+  --popover-foreground: var(--brand-green-50);
+  --primary: var(--brand-orange-500);
+  --primary-foreground: #1f2a24;
+  --secondary: var(--brand-green-700);
+  --secondary-foreground: var(--brand-green-50);
+  --muted: var(--brand-green-800);
+  --muted-foreground: #a9b5ac;
+  --accent: var(--brand-green-700);
+  --accent-foreground: var(--brand-orange-300);
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --border: var(--brand-green-700);
+  --input: var(--brand-green-700);
+  --ring: var(--brand-orange-500);
+
+  --success: #3fae76;
+  --success-foreground: #0f1f17;
+  --warning: var(--brand-orange-400);
+  --warning-foreground: #1f2a24;
+
+  --chart-1: var(--brand-orange-400);
+  --chart-2: var(--brand-green-300);
+  --chart-3: var(--brand-green-500);
+  --chart-4: var(--brand-orange-200);
+  --chart-5: #a9b5ac;
+
+  --sidebar: #0f1f17;
+  --sidebar-foreground: var(--brand-green-50);
+  --sidebar-primary: var(--brand-orange-500);
+  --sidebar-primary-foreground: #1f2a24;
+  --sidebar-accent: var(--brand-green-900);
+  --sidebar-accent-foreground: var(--brand-green-50);
+  --sidebar-border: var(--brand-green-950);
+  --sidebar-ring: var(--brand-orange-500);
+}
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+
+  --color-brand-green-50: var(--brand-green-50);
+  --color-brand-green-100: var(--brand-green-100);
+  --color-brand-green-200: var(--brand-green-200);
+  --color-brand-green-300: var(--brand-green-300);
+  --color-brand-green-400: var(--brand-green-400);
+  --color-brand-green-500: var(--brand-green-500);
+  --color-brand-green-600: var(--brand-green-600);
+  --color-brand-green-700: var(--brand-green-700);
+  --color-brand-green-800: var(--brand-green-800);
+  --color-brand-green-900: var(--brand-green-900);
+  --color-brand-green-950: var(--brand-green-950);
+
+  --color-brand-orange-50: var(--brand-orange-50);
+  --color-brand-orange-100: var(--brand-orange-100);
+  --color-brand-orange-200: var(--brand-orange-200);
+  --color-brand-orange-300: var(--brand-orange-300);
+  --color-brand-orange-400: var(--brand-orange-400);
+  --color-brand-orange-500: var(--brand-orange-500);
+  --color-brand-orange-600: var(--brand-orange-600);
+  --color-brand-orange-700: var(--brand-orange-700);
+  --color-brand-orange-800: var(--brand-orange-800);
+  --color-brand-orange-900: var(--brand-orange-900);
+  --color-brand-orange-950: var(--brand-orange-950);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
