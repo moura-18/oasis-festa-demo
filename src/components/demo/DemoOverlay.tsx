@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, Pause, Play, SkipForward } from "lucide-react";
 import { useDemoStore } from "@/features/demo/useDemoPlayer";
-import { demoScript } from "@/features/demo/script";
+import {
+  demoScript,
+  demoCheckpointOfStep,
+  demoCheckpointCount,
+} from "@/features/demo/script";
 import { useTrackedRect } from "@/features/demo/useTrackedRect";
 import { cn } from "@/lib/utils";
 
@@ -39,8 +43,12 @@ export function DemoOverlay() {
   const step = demoScript[stepIndex];
   if (!step) return null;
 
-  const total = demoScript.length;
-  const progressPct = Math.round(((stepIndex + 1) / total) * 100);
+  // "Passo X de Y" conta só os capítulos narrados (passos `explain`), não o
+  // índice bruto do roteiro — ver o comentário em `buildCheckpoints` em
+  // script.ts para o porquê (evita o contador pulando de forma confusa).
+  const total = demoCheckpointCount;
+  const checkpoint = demoCheckpointOfStep[stepIndex] ?? 1;
+  const progressPct = Math.round((checkpoint / total) * 100);
   const isExplain = step.type === "explain";
 
   const spot = rect
@@ -122,7 +130,7 @@ export function DemoOverlay() {
             )}
           >
             <p className="text-xs font-medium uppercase tracking-wide text-brand-orange-600">
-              Passo {stepIndex + 1} de {total}
+              Passo {checkpoint} de {total}
             </p>
             <h3 className="mt-1 font-display text-lg text-foreground">
               {step.title}
@@ -142,7 +150,7 @@ export function DemoOverlay() {
               <button
                 type="button"
                 onClick={prev}
-                disabled={stepIndex === 0}
+                disabled={checkpoint <= 1}
                 className="inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted disabled:pointer-events-none disabled:opacity-40"
               >
                 <ChevronLeft className="size-4" />
@@ -173,7 +181,7 @@ export function DemoOverlay() {
       {!isExplain && (
         <div className="pointer-events-auto fixed bottom-6 left-1/2 z-[96] flex -translate-x-1/2 items-center gap-2 rounded-full border border-border bg-card px-3 py-2 shadow-lg">
           <span className="px-1 text-xs text-muted-foreground">
-            Passo {stepIndex + 1} de {total}
+            Passo {checkpoint} de {total}
           </span>
           <button
             type="button"

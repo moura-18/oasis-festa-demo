@@ -57,7 +57,7 @@ export function AppShell() {
           <img
             src="/brand/oasis-logo.png"
             alt="Oásis Festas"
-            className="h-9 w-9 rounded-full object-cover"
+            className="h-9 w-auto rounded-md object-contain"
           />
           <span className="font-display text-lg leading-tight text-sidebar-foreground">
             Oásis Festas

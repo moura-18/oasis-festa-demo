@@ -1,16 +1,27 @@
 import { create } from "zustand";
 import { useAppStore } from "@/store";
-import { demoScript, type DemoStep } from "./script";
+import {
+  demoScript,
+  demoCheckpointOfStep,
+  demoCheckpointStartIndex,
+  type DemoStep,
+} from "./script";
 import { queryDemoTarget } from "./dom-utils";
 
-const NAVIGATE_SETTLE_MS = 350;
-const CLICK_TRAVEL_MS = 250;
-const CLICK_HOLD_MS = 700;
-const HIGHLIGHT_HOLD_MS = 900;
-const MOVE_DEFAULT_MS = 700;
-const AI_THINKING_DEFAULT_MS = 1400;
+/**
+ * Timings do player — deliberadamente lentos (bem acima do "instantâneo") pra
+ * quem está só assistindo (sem controlar o mouse) conseguir acompanhar cada
+ * ação antes que a próxima comece. Ajustado a partir de feedback real: a
+ * versão anterior, bem mais rápida, era difícil de acompanhar.
+ */
+const NAVIGATE_SETTLE_MS = 900;
+const CLICK_TRAVEL_MS = 600;
+const CLICK_HOLD_MS = 1500;
+const HIGHLIGHT_HOLD_MS = 1900;
+const MOVE_DEFAULT_MS = 1100;
+const AI_THINKING_DEFAULT_MS = 2200;
 /** Tempo para a animação de layout do card (Framer Motion) terminar de deslizar até a nova coluna. */
-const MOVE_LEAD_HOLD_MS = 900;
+const MOVE_LEAD_HOLD_MS = 1700;
 
 function delayForStep(step: DemoStep): number {
   switch (step.type) {
@@ -211,9 +222,15 @@ export const useDemoStore = create<DemoPlayerState>()((set, get) => {
 
     prev: () => {
       clearScheduled();
-      const prevIndex = Math.max(0, get().stepIndex - 1);
-      set({ stepIndex: prevIndex, paused: false });
-      enterStep(prevIndex);
+      // "Anterior" volta para o INÍCIO do capítulo anterior (o `explain`
+      // anterior), não um passo bruto do array — voltar 1 índice caía com
+      // frequência num passo mecânico (highlight/moveCursorTo) que não pausa
+      // e reavança sozinho, dando a impressão de que o botão não fazia nada.
+      const currentCheckpoint = demoCheckpointOfStep[get().stepIndex] ?? 1;
+      const targetCheckpoint = Math.max(1, currentCheckpoint - 1);
+      const targetIndex = demoCheckpointStartIndex[targetCheckpoint - 1] ?? 0;
+      set({ stepIndex: targetIndex, paused: false });
+      enterStep(targetIndex);
     },
 
     skipToNextScreen: () => {
@@ -243,6 +260,3 @@ export const useDemoStore = create<DemoPlayerState>()((set, get) => {
     },
   };
 });
-
-/** Total de passos do roteiro — usado pela barra de progresso do overlay. */
-export const demoStepCount = demoScript.length;

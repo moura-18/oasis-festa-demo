@@ -59,7 +59,7 @@ export const demoScript: DemoStep[] = [
   {
     type: "moveCursorTo",
     target: "[data-demo-id='inbox-message-escalacao-msg-06-07']",
-    duration: 700,
+    duration: 1100,
   },
   { type: "highlight", target: "[data-demo-id='inbox-message-escalacao-msg-06-07']" },
   {
@@ -80,7 +80,7 @@ export const demoScript: DemoStep[] = [
     type: "aiThinking",
     target: "[data-demo-id='crm-card-lead-06']",
     text: "Analisando conversa e decidindo a próxima etapa do funil…",
-    duration: 1500,
+    duration: 2200,
   },
   { type: "moveLead", leadId: "lead-06", toEstado: "aguardando_dona" },
   { type: "highlight", target: "[data-demo-id='crm-coluna-aguardando_dona']" },
@@ -108,7 +108,7 @@ export const demoScript: DemoStep[] = [
   },
   { type: "navigate", to: "/agenda" },
   { type: "click", target: "[data-demo-id='agenda-mes-proximo']" },
-  { type: "wait", ms: 400 },
+  { type: "wait", ms: 900 },
   { type: "click", target: "[data-demo-id='agenda-dia-2026-10-10']" },
   { type: "highlight", target: "[data-demo-id='agenda-detalhe-dia-dialog']" },
   {
@@ -126,3 +126,45 @@ export const demoScript: DemoStep[] = [
     position: "center",
   },
 ];
+
+/**
+ * Numeração exibida ao público ("Passo X de Y") conta só os passos `explain`
+ * (os "capítulos" narrados) — não os passos mecânicos entre eles
+ * (moveCursorTo/highlight/click/aiThinking/moveLead/wait). Numerar pelo
+ * índice bruto do array fazia o contador pular de forma confusa (ex.: "7 de
+ * 32" pulando pra "11 de 32") sempre que vários passos mecânicos rodavam
+ * entre dois `explain`. Aqui, cada passo mecânico "aponta" para o número do
+ * próximo `explain` à frente — o contador fica parado durante a preparação
+ * (cursor se movendo, destaque aparecendo) e só avança quando o próximo
+ * capítulo realmente começa.
+ */
+function buildCheckpoints(script: DemoStep[]) {
+  const startIndexByCheckpoint: number[] = [];
+  const seqAtIndex = new Array<number | undefined>(script.length);
+  let seq = 0;
+  script.forEach((step, i) => {
+    if (step.type === "explain") {
+      seq += 1;
+      seqAtIndex[i] = seq;
+      startIndexByCheckpoint.push(i);
+    }
+  });
+  const total = seq;
+  const checkpointOfStep = new Array<number>(script.length);
+  let current = total;
+  for (let i = script.length - 1; i >= 0; i--) {
+    if (seqAtIndex[i] !== undefined) current = seqAtIndex[i]!;
+    checkpointOfStep[i] = current;
+  }
+  return { checkpointOfStep, startIndexByCheckpoint, total };
+}
+
+const { checkpointOfStep, startIndexByCheckpoint, total: demoCheckpointCount_ } =
+  buildCheckpoints(demoScript);
+
+/** `demoCheckpointOfStep[stepIndex]` → número do capítulo (1-based) que esse passo pertence/está construindo. */
+export const demoCheckpointOfStep: readonly number[] = checkpointOfStep;
+/** `demoCheckpointStartIndex[checkpointNumber - 1]` → índice no `demoScript` onde aquele capítulo (`explain`) começa. */
+export const demoCheckpointStartIndex: readonly number[] = startIndexByCheckpoint;
+/** Total de capítulos narrados (passos `explain`) — é o "Y" em "Passo X de Y". */
+export const demoCheckpointCount = demoCheckpointCount_;
