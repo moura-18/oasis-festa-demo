@@ -1,5 +1,6 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import {
+  ArrowLeft,
   Inbox,
   KanbanSquare,
   CalendarDays,
@@ -97,8 +98,18 @@ export function AppShell() {
           ))}
         </nav>
 
-        <div className="border-t border-sidebar-border px-5 py-4 text-xs text-sidebar-foreground/60">
-          Agente de IA — demo interna
+        <div className="border-t border-sidebar-border p-3">
+          <Link
+            to="/proposta"
+            data-demo-id="voltar-proposta"
+            className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-sidebar-foreground/85 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
+          >
+            <ArrowLeft className="size-4 shrink-0" />
+            Voltar para a proposta
+          </Link>
+          <p className="px-2 pt-1 text-xs text-sidebar-foreground/60">
+            Agente de IA — demo interna
+          </p>
         </div>
       </aside>
 
