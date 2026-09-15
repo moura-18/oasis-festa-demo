@@ -49,12 +49,18 @@ export function useTrackedRect(selector: string | null): TrackedRect | null {
         const next = readRect(selector);
         return sameRect(prev, next) ? prev : next;
       });
-      if (now - start < SETTLE_WINDOW_MS) {
+      // Sem alvo (ex.: durante um passo "navigate", entre uma página e
+      // outra), um único tick já basta pra limpar o rect — sem isso, o rect
+      // antigo (de um elemento que já nem existe mais, de uma página
+      // anterior) ficava "congelado" até o próximo highlight resolver,
+      // criando um rastro visível do spotlight na posição errada durante a
+      // troca de tela.
+      if (selector && now - start < SETTLE_WINDOW_MS) {
         rafId = requestAnimationFrame(tick);
       }
     }
 
-    if (selector) rafId = requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
 
     const onLayoutEvent = () =>
       setRect((prev) => {
