@@ -35,3 +35,6 @@ Thumbs.db
 .overclock-app/
 
 .vercel
+
+# Claude Code local session/tooling state
+.claude/

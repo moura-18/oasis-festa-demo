@@ -242,8 +242,9 @@ export default function PropostaPage() {
             Atendimento automático pra Oásis Festas.
           </h1>
           <p className="mt-6 max-w-[52ch] text-lg leading-relaxed text-[#5a5651]">
-            Sistema de atendimento, funil e contrato, rodando com dados reais
-            da Oásis. Teste agora, do jeito que vai funcionar no dia a dia.
+            Sistema de atendimento, funil e contrato já funcionando, com o
+            fluxo completo da Oásis. Teste agora, do jeito que vai funcionar
+            no dia a dia.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <RedButton href="#sistema">Ver o funil de leads</RedButton>
@@ -371,37 +372,39 @@ export default function PropostaPage() {
         <Reveal>
           <SectionTag>Estimativa</SectionTag>
           <h2 className="mt-4 max-w-[24ch] font-['Inter_Tight'] text-4xl leading-[1.1] font-bold sm:text-5xl">
-            Tempo e faturamento, com números da própria Oásis.
+            Menos tempo perdido, resposta mais rápida.
           </h2>
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-[#5a5651]">
-            Estimativa, não promessa. Cálculo simples com os dados que já
-            estão no funil da Oásis.
+            Estimativa, não promessa. Baseado em como funciona o dia a dia de
+            um espaço de eventos.
           </p>
         </Reveal>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
           <Reveal>
             <div className="h-full rounded-xl border border-[#0d0f0f]/10 bg-white p-8">
-              <p className="text-sm text-[#8a8680]">Tempo</p>
+              <p className="text-sm text-[#8a8680]">Volume</p>
               <p className="mt-3 font-['Inter_Tight'] text-3xl font-bold">
-                3 a 4h por semana
+                50 pessoas por semana
               </p>
               <p className="mt-3 text-[15px] leading-relaxed text-[#5a5651]">
-                Cada conversa nova exige checar disponibilidade e explicar o
-                pacote na mão. Com 8 a 10 conversas novas por semana, isso já
-                passa de 3 horas. O agente assume essa parte inicial.
+                É quanta gente costuma perguntar disponibilidade, pacote e
+                valor num espaço de festa ativo. Cada mensagem tira alguém do
+                que estava fazendo. O agente assume essa primeira resposta
+                sozinho.
               </p>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="h-full rounded-xl border border-[#0d0f0f]/10 bg-white p-8">
-              <p className="text-sm text-[#8a8680]">Faturamento</p>
+              <p className="text-sm text-[#8a8680]">Velocidade</p>
               <p className="mt-3 font-['Inter_Tight'] text-3xl font-bold">
-                R$ 32.500 por evento
+                Até 5x mais rápido
               </p>
               <p className="mt-3 text-[15px] leading-relaxed text-[#5a5651]">
-                Ticket médio da própria Oásis, direto do painel. Um casamento
-                a mais por trimestre já cobre o investimento.
+                Resposta rápida fecha mais rápido. Quem responde em minutos, e
+                não depois do fim de semana, converte muito mais gente em
+                cliente.
               </p>
             </div>
           </Reveal>
