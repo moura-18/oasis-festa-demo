@@ -162,6 +162,27 @@ function BalmorLogo({ className }: { className?: string }) {
   );
 }
 
+const IMPACTO = [
+  {
+    title: "Volume alto exige resposta imediata",
+    body: "A maioria dos consumidores já espera interação em tempo real com as empresas, e isso pressiona diretamente a capacidade de atendimento quando o volume de mensagens cresce.",
+    source: "Salesforce, State of the Connected Customer",
+    href: "https://www.salesforce.com/news/stories/state-of-the-connected-customer-6th-edition/",
+  },
+  {
+    title: "O primeiro minuto pesa na decisão",
+    body: "Leads contatados dentro de um minuto têm uma probabilidade de conversão muito maior do que os contatados depois. O estudo mostra que esse ganho passa dos 300%.",
+    source: "Harvard Business Review, \"The Short Life of Online Sales Leads\" (Oldroyd, McElheran & Elkington, 2011)",
+    href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
+  },
+  {
+    title: "Cinco minutos fazem toda a diferença",
+    body: "O mesmo estudo aponta que leads contatados em até cinco minutos têm 21 vezes mais chance de conversão do que os contatados depois de meia hora.",
+    source: "Harvard Business Review, \"The Short Life of Online Sales Leads\" (Oldroyd, McElheran & Elkington, 2011)",
+    href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
+  },
+];
+
 const DIAGNOSTICO = [
   {
     n: "01",
@@ -370,44 +391,37 @@ export default function PropostaPage() {
       {/* Impacto estimado */}
       <section className="border-t border-[#0d0f0f]/10 px-6 py-24 sm:px-10">
         <Reveal>
-          <SectionTag>Estimativa</SectionTag>
+          <SectionTag>Por que velocidade importa</SectionTag>
           <h2 className="mt-4 max-w-[24ch] font-['Inter_Tight'] text-4xl leading-[1.1] font-bold sm:text-5xl">
             Menos tempo perdido, resposta mais rápida.
           </h2>
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-[#5a5651]">
-            Estimativa, não promessa. Baseado em como funciona o dia a dia de
-            um espaço de eventos.
+            Não é opinião. É o que pesquisas de mercado já mostram sobre
+            atendimento e conversão.
           </p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <Reveal>
-            <div className="h-full rounded-xl border border-[#0d0f0f]/10 bg-white p-8">
-              <p className="text-sm text-[#8a8680]">Volume</p>
-              <p className="mt-3 font-['Inter_Tight'] text-3xl font-bold">
-                50 pessoas por semana
-              </p>
-              <p className="mt-3 text-[15px] leading-relaxed text-[#5a5651]">
-                É quanta gente costuma perguntar disponibilidade, pacote e
-                valor num espaço de festa ativo. Cada mensagem tira alguém do
-                que estava fazendo. O agente assume essa primeira resposta
-                sozinho.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="h-full rounded-xl border border-[#0d0f0f]/10 bg-white p-8">
-              <p className="text-sm text-[#8a8680]">Velocidade</p>
-              <p className="mt-3 font-['Inter_Tight'] text-3xl font-bold">
-                Até 5x mais rápido
-              </p>
-              <p className="mt-3 text-[15px] leading-relaxed text-[#5a5651]">
-                Resposta rápida fecha mais rápido. Quem responde em minutos, e
-                não depois do fim de semana, converte muito mais gente em
-                cliente.
-              </p>
-            </div>
-          </Reveal>
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {IMPACTO.map((item, i) => (
+            <Reveal key={item.title} delay={i * 0.08}>
+              <div className="flex h-full flex-col rounded-xl border border-[#0d0f0f]/10 bg-white p-8">
+                <h3 className="font-['Inter_Tight'] text-xl font-bold">
+                  {item.title}
+                </h3>
+                <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#5a5651]">
+                  {item.body}
+                </p>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 block text-[11px] leading-snug text-[#8a8680] hover:text-[#e9392f] hover:underline"
+                >
+                  {item.source}
+                </a>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
