@@ -447,12 +447,22 @@ export default function PropostaPage() {
           </div>
 
           <div className="mt-8 rounded-xl border border-[#0d0f0f]/10 bg-[#f3f2eb] p-6">
-            <h3 className="text-lg font-semibold">Licença de sustentação</h3>
+            <h3 className="text-lg font-semibold">
+              Licença de Sustentação Operacional (LSO)
+            </h3>
             <p className="mt-2 max-w-[62ch] text-[15px] leading-relaxed text-[#5a5651]">
               Mensalidade que mantém o sistema no ar. Suporte, ajuste e
               atualização inclusos.
             </p>
-            <p className="mt-3 text-xs tracking-[0.1em] text-[#8a8680] uppercase">
+            <div className="mt-4 flex flex-wrap items-baseline gap-2">
+              <span className="font-['Inter_Tight'] text-xl text-[#8a8680] line-through">
+                R$ 319/mês
+              </span>
+              <span className="text-[11px] font-medium tracking-[0.1em] text-[#8a8680] uppercase">
+                Valor de tabela · oferta exclusiva revelada na conversa
+              </span>
+            </div>
+            <p className="mt-4 text-xs tracking-[0.1em] text-[#8a8680] uppercase">
               Suporte · Manutenção · Ajuste · Sustentação
             </p>
           </div>
